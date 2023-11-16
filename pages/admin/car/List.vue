@@ -58,19 +58,19 @@ const refresh = async () => {
           <p class="text-xl text-black dark:text-white" >車數量:{{carStore.searchList.length}}</p>
         </div>
 
-        <div class="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
+        <div class="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
 
-          <div  v-for="(car) in carStore.searchList" class="p-1 md:p-5 flex justify-around sm:flex-row md:flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center md:items-start">
-            <img :src="car.image" alt="">
-            <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
+          <div  v-for="(car) in carStore.searchList" class="p-1 md:p-2 flex  flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
+            <img :src="car.image" class="mb-2" alt="">
+            <p class="text-2xl mb-2 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
             <div class="inline-flex rounded-md shadow-sm" role="group">
-              <NuxtLink to="/admin/car/info" @click="carStore.setEditValue(car.id)" type="button" class="text-xl md:text-3xl px-4 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+              <NuxtLink to="/admin/car/info" @click="carStore.setEditValue(car.id)" type="button" class="text-lg md:text-3xl px-2 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
                 查看
               </NuxtLink>
-              <NuxtLink to="/admin/car/edit" @click="carStore.setEditValue(car.id)" type="button" class="text-xl md:text-3xl px-4 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+              <NuxtLink to="/admin/car/edit" @click="carStore.setEditValue(car.id)" type="button" class="text-lg md:text-3xl px-2 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
                 編輯
               </NuxtLink>
-              <button @click="setDeleteMember(car.id, car.name)" data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" class="text-xl md:text-3xl px-4 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-r-md hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+              <button @click="setDeleteMember(car.id, car.name)" data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" class="text-lg md:text-3xl px-2 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-r-md hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
                 刪除
               </button>
             </div>
