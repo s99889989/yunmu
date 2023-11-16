@@ -60,7 +60,7 @@ const refresh = async () => {
 
         <div class="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
 
-          <div  v-for="(car) in carStore.searchList" class="p-1 md:p-2 flex  flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
+          <div  v-for="(car) in carStore.searchList" class="p-1 md:p-2 flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
             <img :src="car.image" class="mb-2" alt="">
             <p class="text-2xl mb-2 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
             <div class="inline-flex rounded-md shadow-sm" role="group">

@@ -93,6 +93,11 @@ onMounted(()=>{
         </div>
 
         <div class="flex items-center">
+          <label for="password" class="w-48 md:w-36 text-3xl block font-medium text-gray-900 dark:text-white">改裝分支</label>
+          <input v-model="carStore.data.editData.modification_branch" type="text" id="" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        </div>
+
+        <div class="flex items-center">
           <label for="password" class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">特性</label>
           <input v-model="carStore.data.editData.characteristic" type="text" id="" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         </div>

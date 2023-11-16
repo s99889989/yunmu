@@ -29,8 +29,7 @@ onMounted(()=>{
         <span class=" text-center text-4xl font-medium text-gray-900 dark:text-white">查看車輛</span>
 
         <div class="flex items-center">
-          <label for="car_name" class="w-48 md:w-36 text-3xl block font-medium text-gray-900 dark:text-white">名稱</label>
-
+          <label for="car_name" class="w-32 md:w-36 text-3xl block font-medium text-gray-900 dark:text-white">名稱</label>
           <div class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p>{{carStore.data.editData.name}}</p>
           </div>
@@ -38,8 +37,6 @@ onMounted(()=>{
 
 
         <div class="flex flex-wrap items-center">
-
-          <label for="" class="text-3xl block font-medium text-gray-900 dark:text-white">顯示圖</label>
           <img class="w-full md:w-auto md:h-32" :src="carStore.data.editData.image" alt="">
         </div>
 
@@ -54,6 +51,13 @@ onMounted(()=>{
           <label class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">車型</label>
           <div class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p>{{carStore.data.editData.model}}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center">
+          <label for="password" class="w-48 md:w-36 text-3xl block font-medium text-gray-900 dark:text-white">改裝分支</label>
+          <div class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p>{{carStore.data.editData.modification_branch}}</p>
           </div>
         </div>
 
