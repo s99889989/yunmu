@@ -7,6 +7,8 @@ import NavBarBottomUser from "~/pages/navbar/NavBarBottomUser.vue";
 
 </script>
 <template>
+  <UpDownButton/>
+
   <NavBarTopAdmin/>
   <NavBarTopUser/>
   <NuxtPage />

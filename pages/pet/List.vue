@@ -24,8 +24,8 @@ const loading = ref(false);
 const refresh = async () => {
   loading.value = true;
   await petStore.refresh().then(()=>{
-    loading.value = false;
     initFlowbite();
+    loading.value = false;
   });
 
 }
@@ -35,8 +35,8 @@ const refresh = async () => {
 <template>
   <div class="dark:bg-black bg-white flex justify-center container-top w-full">
     <div class="w-full lg:w-3/4 mx-5">
+      <!--   標題   -->
       <p class="text-black dark:text-white text-5xl text-center pt-5">寵物列表</p>
-
       <!--   讀取圈圈   -->
       <div role="status" :class="{'hidden': !loading}" class="flex items-center justify-center h-1/2">
         <svg aria-hidden="true" class="w-28 h-28 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
