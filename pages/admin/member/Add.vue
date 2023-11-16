@@ -44,7 +44,7 @@ onMounted( () => {
     game_level: '0',
     game_position: '隊員',
     discord_id: '',
-    map_list: [],
+    car_list: [],
     pet_list: [],
   }
 
@@ -92,7 +92,7 @@ onMounted( () => {
         <div class="flex items-center">
           <label class="w-72 md:w-48 text-3xl block font-medium text-gray-900 dark:text-white">車隊的職位</label>
           <select  v-model="memberStore.data.editData.game_position" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected>隊員</option>
+            <option>隊員</option>
             <option>菁英</option>
             <option>副隊長</option>
             <option>隊長</option>
