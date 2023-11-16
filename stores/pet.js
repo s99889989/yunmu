@@ -19,9 +19,9 @@ export const usePetStore = defineStore('Pet', () => {
     ],
     image_path:[],
     //紀錄UUID和car_list位置
-    map_map: new Map(),
+    pet_map: new Map(),
     //成員列表
-    map_list: [
+    pet_list: [
       {
         id: '',
         name: '',
@@ -49,7 +49,7 @@ export const usePetStore = defineStore('Pet', () => {
 
   //搜尋後的結果
   const searchList = computed(() => {
-    let displayMembers = data.map_list.slice();
+    let displayMembers = data.pet_list.slice();
 
     //名稱
     if (data.search_pet_name.length > 0) {
@@ -130,7 +130,7 @@ export const usePetStore = defineStore('Pet', () => {
         .then(res => res.text())
         .then(uuidString => {
           data.editData.id = uuidString;
-          data.map_list.unshift(data.editData);
+          data.pet_list.unshift(data.editData);
           //更新Map對應列表
           refreshMap();
 
@@ -151,8 +151,8 @@ export const usePetStore = defineStore('Pet', () => {
       body: JSON.stringify(data.editData)
     }).then(res => {
       const id = data.editData.id;
-      const index = data.map_map.get(id);
-      data.map_list[index] =  data.editData;
+      const index = data.pet_map.get(id);
+      data.pet_list[index] =  data.editData;
     })
 
   }
@@ -161,8 +161,8 @@ export const usePetStore = defineStore('Pet', () => {
   //設置編輯值
   const setEditValue = (id) => {
     //從id獲取index
-    const index = data.map_map.get(id);
-    data.editData =  data.map_list[index];
+    const index = data.pet_map.get(id);
+    data.editData =  data.pet_list[index];
     data.image_path = ['yunmu', 'pet', data.editData.id]
     //刷新圖片列表
     refreshImage();
@@ -180,17 +180,17 @@ export const usePetStore = defineStore('Pet', () => {
 
         })
     //從id獲取index
-    const index = data.map_map.get(id);
+    const index = data.pet_map.get(id);
     //從列表刪除
-    data.map_list.splice(index, 1);
+    data.pet_list.splice(index, 1);
     //更新ID的對應表
     refreshMap();
 
   }
   //更新ID的對應表
   const refreshMap = () => {
-    data.map_list.forEach((member, key, index)=>{
-      data.map_map.set(member.id, key)
+    data.pet_list.forEach((member, key, index)=>{
+      data.pet_map.set(member.id, key)
     })
   }
 
@@ -199,9 +199,9 @@ export const usePetStore = defineStore('Pet', () => {
     const url = data.main_url+'yunmu/pet/get';
     try {
       const response = await fetch(url);
-      data.map_list = await response.json();
+      data.pet_list = await response.json();
     } catch (error) {
-      data.map_list =  [];
+      data.pet_list =  [];
     }finally {
       //更新Map對應列表
       refreshMap();

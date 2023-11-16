@@ -10,7 +10,7 @@ onMounted(()=>{
   // 如果ID是空就返回列表
   if(mapStore.data.editData.id.length < 1){
     const router = useRouter()
-    router.push('/admin/car/list');
+    router.push('/admin/map/list');
   }
 })
 

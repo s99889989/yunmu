@@ -7,6 +7,7 @@ export const useCarStore = defineStore('Car', () => {
   const data = reactive({
     main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_car_name: '',
+    search_car_type: '所有類型',
     image_list:[
       {
         url: 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
@@ -87,6 +88,13 @@ export const useCarStore = defineStore('Car', () => {
     if (data.search_car_name.length > 0) {
       displayMembers = displayMembers.filter((member) =>
           member.name.includes(data.search_car_name)
+      );
+    }
+
+    //類型(A, T)
+    if (data.search_car_type !== '所有類型') {
+      displayMembers = displayMembers.filter(
+          (element) => element.type === data.search_car_type
       );
     }
 

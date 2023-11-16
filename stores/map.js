@@ -7,6 +7,8 @@ export const useMapStore = defineStore('Map', () => {
   const data = reactive({
     main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_map_name: '',
+    search_map_type: '所有類型',
+    search_map_star: 0,
     image_list:[
       {
         url: 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
@@ -49,6 +51,20 @@ export const useMapStore = defineStore('Map', () => {
     if (data.search_map_name.length > 0) {
       displayMembers = displayMembers.filter((member) =>
           member.name.includes(data.search_map_name)
+      );
+    }
+
+    //類型(簡單)
+    if (data.search_map_type !== '所有類型') {
+      displayMembers = displayMembers.filter(
+          (element) => element.type === data.search_map_type
+      );
+    }
+
+    //星級(1~7)
+    if (data.search_map_star !== 0) {
+      displayMembers = displayMembers.filter(
+          (element) => element.star === data.search_map_star
       );
     }
 
