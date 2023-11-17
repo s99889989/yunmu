@@ -40,6 +40,43 @@ export const useAccountStore = defineStore('Account', () => {
       localStorage.setItem('account_speed', null);
     }
   }
+
+
+  //新增
+  const add = async () => {
+    const url = data.main_url+'yunmu/member/add';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data.editData)
+    })
+        .then(res => res.text())
+        .then(uuidString => {
+
+
+        })
+
+  }
+
+  //更新
+  const update = () => {
+
+    const url = data.main_url+'yunmu/member/update';
+
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data.member)
+    }).then(res => {
+
+    })
+
+  }
+
   //從瀏覽器讀取值
   const loadDate = async () => {
     const login_state_data = localStorage.getItem("login_state_data");
@@ -138,5 +175,5 @@ export const useAccountStore = defineStore('Account', () => {
 
   })
 
-  return { data, login_state, login, logout, modeName, checkAdminLogin, loadDate, saveDate }
+  return { data, login_state, login, logout, modeName, checkAdminLogin, loadDate, saveDate, update }
 })

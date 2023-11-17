@@ -7,6 +7,22 @@ const changeAdmin = () => {
   accountStore.data.admin = !accountStore.data.admin;
 }
 
+const edit = reactive({
+  //編輯的成員
+  member: {
+    id: '',
+    permissions: 'default',
+    game_name: '',
+    password: 'asd123456',
+    game_id: '',
+    game_level: '0',
+    game_position: '',
+    discord_id: '',
+    car_list: [],
+    pet_list: [],
+  },
+})
+
 onMounted(()=>{
   //從瀏覽器讀取值(帳號)
   accountStore.loadDate().then(()=>{
@@ -16,17 +32,23 @@ onMounted(()=>{
     }
   });
 
+  edit.member = { ...accountStore.data.member};
 
 })
+const save = () => {
+  accountStore.data.member = { ...edit.member};
+  accountStore.saveDate();
+  accountStore.update();
+}
 </script>
 
 <template>
 
-<!--  <div class="dark:bg-black bg-white flex w-full flex-col items-center justify-center container-top">-->
-<!--    <h1 class="text-5xl dark:text-white font-bold text-sky-400">{{accountStore.data.member.game_id}}</h1>-->
-<!--    <p class="text-7xl md:text-9xl dark:text-white font-bold text-gray-600">目前登入中</p>-->
-<!--    <p @click="changeAdmin()" class="text-text-lg md:text-lg dark:text-white font-bold text-gray-600">切換到 -> {{modeName()}}</p>-->
-<!--  </div>-->
+  <!--  <div class="dark:bg-black bg-white flex w-full flex-col items-center justify-center container-top">-->
+  <!--    <h1 class="text-5xl dark:text-white font-bold text-sky-400">{{accountStore.data.member.game_id}}</h1>-->
+  <!--    <p class="text-7xl md:text-9xl dark:text-white font-bold text-gray-600">目前登入中</p>-->
+  <!--    <p @click="changeAdmin()" class="text-text-lg md:text-lg dark:text-white font-bold text-gray-600">切換到 -> {{modeName()}}</p>-->
+  <!--  </div>-->
   <div class="dark:bg-black bg-white flex justify-center container-top w-full">
     <div class="w-full lg:w-3/4">
       <div class="text-center">
@@ -35,21 +57,18 @@ onMounted(()=>{
 
       <div class="grid gap-6 grid-cols-1 md:grid-cols-1 items-center pt-5 px-5">
 
-        <button v-show="accountStore.data.member.permissions === 'admin'" @click="changeAdmin()" type="button" class="text-center text-2xl text-white bg-blue-800 hover:bg-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 dark:bg-blue-800 dark:hover:bg-blue-700 dark:focus:ring-blue-700 dark:border-blue-700">
-          {{ accountStore.modeName() }}</button>
-
         <div class="flex items-center">
           <label class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">權限</label>
-          <div class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <p>{{accountStore.data.member.permissions}}</p>
-          </div>
+          <select  v-model="edit.member.permissions" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="default" selected>預設</option>
+            <option value="user">使用者</option>
+            <option value="admin">管理者</option>
+          </select>
         </div>
 
         <div class="flex items-center">
           <label for="game_name" class="w-48 md:w-36 text-3xl block font-medium text-gray-900 dark:text-white">遊戲姓名</label>
-          <div class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <p>{{accountStore.data.member.game_name}}</p>
-          </div>
+          <input v-model="edit.member.game_name" type="text" id="game_name" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         </div>
 
         <div class="flex items-center">
@@ -103,12 +122,11 @@ onMounted(()=>{
           </div>
         </div>
 
-
         <div class="grid gap-6 grid-cols-2 items-center">
-          <NuxtLink to="/account/edit" type="button" class="text-center text-2xl text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-            修改</NuxtLink>
-          <NuxtLink @click="accountStore.logout()" to="/account/login" type="button" class="text-center text-2xl text-white bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 dark:bg-red-800 dark:hover:bg-red-700 dark:focus:ring-red-700 dark:border-red-700">
-            登出</NuxtLink>
+          <NuxtLink @click="save()" to="/account/info" type="button" class="text-center text-2xl text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+            確定修改</NuxtLink>
+          <NuxtLink to="/account/info" type="button" class="text-center text-2xl text-white bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 dark:bg-red-800 dark:hover:bg-red-700 dark:focus:ring-red-700 dark:border-red-700">
+            取消修改</NuxtLink>
         </div>
 
 

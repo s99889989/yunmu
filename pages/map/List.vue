@@ -64,13 +64,15 @@ const refresh = async () => {
           <p class="text-xl text-black dark:text-white" >地圖數量:{{ mapStore.searchList.length }}</p>
         </div>
 
-        <div class="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
+        <div class="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 pb-20">
 
-          <div v-for="(car) in mapStore.searchList" class="p-1 md:p-5 flex justify-around sm:flex-row md:flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center md:items-start">
+          <div v-for="(car) in mapStore.searchList" class="p-1 md:p-5 flex flex-col justify-around bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
             <img :src="car.image" alt="">
-            <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
-            <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.type}}</p>
-            <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">星級:{{car.star}}</p>
+            <p class="text-2xl md:mb-2 md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
+            <div class="flex">
+              <p class="text-2xl md:mb-2 me-2 md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.type}}</p>
+              <p class="text-2xl md:mb-2 md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white text-center">星級:{{car.star}}</p>
+            </div>
             <NuxtLink to="/map/info" @click="mapStore.setEditValue(car.id)" type="button" class="text-xl md:text-3xl px-4 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
               查看
             </NuxtLink>

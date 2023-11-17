@@ -28,16 +28,11 @@ onMounted(()=>{
       <div class="flex flex-wrap">
         <span class="basis-full text-center text-4xl font-medium text-gray-900 dark:text-white">查看車輛</span>
 
-        <img class="basis-full md:basis-1/2" :src="carStore.data.editData.image" alt="">
-<!--        <div class="basis-full md:basis-1/2 h-30 bg-blue-300 grid gap-6 grid-cols-1 items-center pt-5 md:pt-0">-->
-<!--          <div class="flex items-center h-20 w-full bg-blue-300">-->
-<!--            <label for="car_name" class="text-3xl block font-medium text-gray-900 dark:text-white me-5">名稱</label>-->
-<!--            <p class=" flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">-->
-<!--              {{carStore.data.editData.name}}</p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!-- grid gap-6 grid-cols-1 items-center pt-5 md:pt-0-->
-        <div class="basis-full md:basis-1/2 grid gap-6 grid-cols-1 items-center pt-5 md:pt-0">
+        <div  class="basis-full col-md-5 col-xl-4">
+          <img class="w-full" :src="carStore.data.editData.image" alt="">
+        </div>
+
+        <div class="basis-full col-md-7 col-xl-8 grid gap-6 grid-cols-1 items-center pt-5 md:pt-0">
 
           <div class="flex items-center h-20 w-full">
             <label for="car_name" class="text-3xl block font-medium text-gray-900 dark:text-white me-5">名稱</label>
@@ -224,6 +219,8 @@ onMounted(()=>{
 </template>
 
 <style scoped>
+
+
 .attributes_label{
   width: 20rem;
 }

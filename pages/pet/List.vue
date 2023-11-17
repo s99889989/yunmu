@@ -48,9 +48,9 @@ const refresh = async () => {
           <p class="text-xl text-black dark:text-white" >寵物數量:{{ petStore.searchList.length }}</p>
         </div>
 
-        <div class="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
+        <div class="grid gap-6 grid-cols-3 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
 
-          <div v-for="(car) in petStore.searchList" class="p-1 md:p-5 flex justify-around sm:flex-row md:flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center md:items-start">
+          <div v-for="(car) in petStore.searchList" class="p-1 md:p-2 flex flex-col justify-around bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
             <img :src="car.image" alt="">
             <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
             <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">著裝度:{{car.dress}}</p>
