@@ -1,12 +1,15 @@
 <script setup lang="js">
 import {usePetStore} from "~/stores/pet.js";
+import {useAccountStore} from "~/stores/account.js";
 
 
 const petStore = usePetStore();
-
+const accountStore = useAccountStore();
 
 
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   // 如果ID是空就返回列表
   if(petStore.data.editData.id.length < 1){
     const router = useRouter()

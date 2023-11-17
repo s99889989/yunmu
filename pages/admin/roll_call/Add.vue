@@ -1,8 +1,9 @@
 <script setup lang="js">
 import {useRollCallStore} from "~/stores/roll_call";
+import {useAccountStore} from "~/stores/account.js";
 
 const rollCallStore = useRollCallStore();
-
+const accountStore = useAccountStore();
 const roll_call = ref(
     {
       date: '',
@@ -15,7 +16,8 @@ const roll_call = ref(
     }
 )
 onMounted( async () => {
-
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   roll_call.value.member_list.length = 0;
 
 

@@ -1,8 +1,9 @@
 <script setup lang="js">
 import {useCarStore} from "~/stores/car.js";
 import {initFlowbite} from "flowbite";
+import {useAccountStore} from "~/stores/account.js";
 const carStore = useCarStore();
-
+const accountStore = useAccountStore();
 //要刪除的點名表名稱
 const delete_id = ref('');
 const delete_name = ref('');
@@ -12,7 +13,8 @@ const setDeleteMember = (id, name) => {
   delete_name.value = name;
 }
 onMounted( async ()=>{
-
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   await refresh();
 
 })

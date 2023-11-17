@@ -5,8 +5,10 @@ export const useAccountStore = defineStore('Account', () => {
   //https://madustrialtd.asuscomm.com:9100/
   //http://localhost:9100/
   const data = reactive({
-    admin: false,
     main_url: 'https://madustrialtd.asuscomm.com:9100/',
+    admin: false,
+    login_error: false,
+    password: '',
     //編輯的成員
     member: {
       id: '',
@@ -20,35 +22,121 @@ export const useAccountStore = defineStore('Account', () => {
       car_list: [],
       pet_list: [],
     },
-    //登入訊息
-    login_data: {
-      id: '',
-      password: '',
-    },
+
   })
+  //需要紀錄的值
+  const login_state = reactive({
+    username: '',
+    keep_login: false,
+  })
+  //把值儲存到瀏覽器
+  const saveDate = () => {
 
-  //刷新列表
-  const login = async () => {
+    localStorage.setItem('login_state_data', JSON.stringify(login_state))
 
+    if(login_state.keep_login){
+      localStorage.setItem('account_speed', JSON.stringify(data.member))
+    }else {
+      localStorage.setItem('account_speed', null);
+    }
+  }
+  //從瀏覽器讀取值
+  const loadDate = async () => {
+    const login_state_data = localStorage.getItem("login_state_data");
+    if(login_state_data){
+      Object.assign(login_state, JSON.parse(login_state_data));
+    }
+    if(login_state.keep_login){
+      const account_speed= localStorage.getItem('account_speed')
+      if(account_speed != null){
+        Object.assign(data.member, JSON.parse(account_speed));
+      }
+    }
+
+  }
+
+  //檢查帳號狀態並做出動作
+  const checkAdminLogin = () => {
+    //從瀏覽器讀取值
+    loadDate();
+
+    const router = useRouter()
+    if(data.member.id.length > 0){
+      if(data.member.permissions !== 'admin'){
+        router.push('/')
+      }
+    }else {
+      router.push('/account/login')
+    }
+
+  }
+
+  //登入
+  const login = async (id, password) => {
+    const login_data = {
+      id: id,
+      password: password,
+    }
     const url = data.main_url+'yunmu/account/login';
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data.login_data)
+      body: JSON.stringify(login_data)
     })
         .then(res => res.json())
         .then(dataRes => {
+
           data.member = dataRes
-          if(data.member.permissions === 'admin'){
-            data.admin = true;
-            const router = useRouter()
-            router.push('/admin/member/list');
+
+          const router = useRouter()
+          if(data.member.id.length > 1){
+            data.login_error = false;
+            router.push('/account/info');
+
+            saveDate();
+          }else {
+            data.login_error = true;
           }
+
         })
 
   }
 
-  return { data, login }
+
+
+  //登出
+  const logout = () => {
+    data.admin = false;
+    data.login_error = false;
+    data.member = {
+      id: '',
+      permissions: 'default',
+      game_name: '',
+      password: '',
+      game_id: '',
+      game_level: '0',
+      game_position: '',
+      discord_id: '',
+      car_list: [],
+      pet_list: [],
+    }
+    localStorage.setItem('account_speed', null);
+  }
+
+  //模式名稱
+  const modeName = () => {
+    if(data.admin){
+      return "切換到->使用者";
+    }else {
+      return "切換到->管理者";
+    }
+  }
+
+  onMounted(()=>{
+
+  })
+
+  return { data, login_state, login, logout, modeName, checkAdminLogin, loadDate, saveDate }
 })

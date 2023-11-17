@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import NavBarBottomAdmin from "~/pages/admin/navbar/NavBarBottomAdmin.vue";
-import NavBarTopAdmin from "~/pages/admin/navbar/NavBarTopAdmin.vue";
+import NavBarBottomAdmin from "~/pages/navbar/NavBarBottomAdmin.vue";
+import NavBarTopAdmin from "~/pages/navbar/NavBarTopAdmin.vue";
 import NavBarTopUser from "~/pages/navbar/NavBarTopUser.vue";
 import NavBarBottomUser from "~/pages/navbar/NavBarBottomUser.vue";
 

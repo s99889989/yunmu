@@ -1,7 +1,8 @@
 <script setup lang="js">
 import {useMemberStore} from "~/stores/member.js";
+import {useAccountStore} from "~/stores/account.js";
 const memberStore = useMemberStore();
-
+const accountStore = useAccountStore();
 const add_input = reactive({
   car: '',
   pet: '',
@@ -33,6 +34,8 @@ const removePet = (idx) => {
 
 }
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   // 如果ID是空就返回列表
   if(memberStore.data.editData.id.length < 1){
     const router = useRouter()

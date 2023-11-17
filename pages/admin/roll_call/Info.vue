@@ -1,8 +1,9 @@
 <script setup lang="js">
 import {useRollCallStore} from "~/stores/roll_call";
 import html2canvas from 'html2canvas';
+import {useAccountStore} from "~/stores/account.js";
 const rollCallStore = useRollCallStore();
-
+const accountStore = useAccountStore();
 const roll_call = ref(
     {
       date: '',
@@ -50,6 +51,8 @@ const downLoad = async () => {
 }
 
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   roll_call.value = rollCallStore.data.edit_roll_call;
   // 如果日期是空就返回列表
   if(roll_call.value.date.length < 1){

@@ -2,10 +2,13 @@
 import {useMapStore} from "~/stores/map.js";
 import InsertPicture from "~/pages/admin/map/InsertPicture.vue";
 import {initFlowbite} from "flowbite";
+import {useAccountStore} from "~/stores/account.js";
 
 const mapStore = useMapStore();
-
+const accountStore = useAccountStore();
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   if(mapStore.data.editData.id.length < 1){
     const router = useRouter()
     router.push('/admin/map/list');

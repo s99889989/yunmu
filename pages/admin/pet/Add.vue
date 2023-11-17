@@ -1,11 +1,14 @@
 <script setup lang="js">
 import {usePetStore} from "~/stores/pet.js";
-import FixedAddOptions from "~/pages/admin/pet/add/FixedAddOptions.vue";
+import FixedAddOptions from "~/components/FixedAddOptions.vue";
+import {useAccountStore} from "~/stores/account.js";
 
 const petStore = usePetStore();
-
+const accountStore = useAccountStore();
 
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   petStore.data.editData = {
     id: '',
     name: '',

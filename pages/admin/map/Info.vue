@@ -1,12 +1,15 @@
 <script setup lang="js">
 
 import {useMapStore} from "~/stores/map.js";
+import {useAccountStore} from "~/stores/account.js";
 
 const mapStore = useMapStore();
-
+const accountStore = useAccountStore();
 
 
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   // 如果ID是空就返回列表
   if(mapStore.data.editData.id.length < 1){
     const router = useRouter()

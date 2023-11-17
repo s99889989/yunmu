@@ -181,7 +181,8 @@ export const useCarStore = defineStore('Car', () => {
   const update = () => {
 
     const url = data.main_url+'yunmu/car/update';
-
+    console.log('更新')
+    console.log(data.editData.modification_branch)
     fetch(url, {
       method: 'PUT',
       headers: {

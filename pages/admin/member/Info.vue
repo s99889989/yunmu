@@ -1,7 +1,11 @@
 <script setup lang="js">
 import {useMemberStore} from "~/stores/member.js";
+import {useAccountStore} from "~/stores/account.js";
 const memberStore = useMemberStore();
+const accountStore = useAccountStore();
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   // 如果ID是空就返回列表
   if(memberStore.data.editData.id.length < 1){
     const router = useRouter()
@@ -14,7 +18,7 @@ onMounted(()=>{
   <div class="dark:bg-black bg-white flex justify-center container-top w-full">
     <div class="w-full lg:w-3/4">
       <div class="text-center">
-        <span class=" text-center text-4xl font-medium text-gray-900 dark:text-white">編輯人員</span>
+        <span class=" text-center text-4xl font-medium text-gray-900 dark:text-white">查看人員</span>
       </div>
 
       <div class="grid gap-6 grid-cols-1 md:grid-cols-1 items-center pt-5 px-5">

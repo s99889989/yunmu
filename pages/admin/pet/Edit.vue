@@ -3,9 +3,13 @@
 import InsertPicture from "~/pages/admin/pet/InsertPicture.vue";
 import {initFlowbite} from "flowbite";
 import {usePetStore} from "~/stores/pet.js";
+import {useAccountStore} from "~/stores/account.js";
 const petStore = usePetStore();
+const accountStore = useAccountStore();
 
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   if(petStore.data.editData.id.length < 1){
     const router = useRouter()
     router.push('/admin/pet/list');

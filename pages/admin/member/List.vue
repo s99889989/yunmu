@@ -1,8 +1,9 @@
 <script setup lang="js">
 import {useMemberStore} from "~/stores/member.js";
 import {initFlowbite} from "flowbite";
+import {useAccountStore} from "~/stores/account.js";
 const memberStore = useMemberStore();
-
+const accountStore = useAccountStore();
 //要刪除的點名表名稱
 const delete_member = ref('');
 const delete_name = ref('');
@@ -15,6 +16,8 @@ const setDeleteMember = (id, name) => {
 //是否在讀取
 const loading = ref(false);
 onMounted( async ()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   loading.value = true;
   await memberStore.refresh().then(()=>{
     initFlowbite();

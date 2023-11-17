@@ -4,7 +4,8 @@ import {useRollCallStore} from "~/stores/roll_call";
 const rollCallStore = useRollCallStore();
 import {useMemberStore} from "~/stores/member";
 import {initFlowbite} from "flowbite";
-
+import {useAccountStore} from "~/stores/account.js";
+const accountStore = useAccountStore();
 const membersStore = useMemberStore();
 
 //要刪除的點名表名稱
@@ -16,6 +17,8 @@ const setDeleteDate = (date) => {
 //是否在讀取
 const loading = ref(false);
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   loading.value = true;
   membersStore.refresh().then(() => {
     rollCallStore.data.member_list.length = 0;

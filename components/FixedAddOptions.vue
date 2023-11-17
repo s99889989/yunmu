@@ -60,18 +60,19 @@ const reSelect = () => {
 
 
   <div class=" bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-    <p class="text-gray-900 dark:text-white text-3xl block font-medium px-5 pt-5" >{{props.title}}</p>
-    <div class="flex items-center p-5">
+
+    <div class="p-5 flex items-center">
+      <p class="me-5 text-gray-900 dark:text-white text-3xl block font-medium " >{{props.title}}</p>
       <select v-model="data.label" class="me-5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         <option v-for="(l) in getLabelList()" >{{l}}</option>
       </select>
       <button @click="addLabel()" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl p-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
         增加</button>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 items-center ">
-      <div  v-for="(text, index) in data.label_list_select" class="flex mb-5">
-        <p class="p-2 text-3xl text-gray-900 dark:text-white">{{text}}</p>
-        <button @click="removeLabel(index)" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl p-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+    <div class="px-5 pb-5 grid grid-cols-2 md:grid-cols-3 items-center">
+      <div v-for="(text, index) in data.label_list_select" class="flex items-center">
+        <p class="me-5 text-3xl text-gray-900 dark:text-white">{{text}}</p>
+        <button @click="removeLabel(index)" type="button" class="p-2.5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
           刪除</button>
       </div>
     </div>

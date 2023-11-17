@@ -1,11 +1,14 @@
 <script setup lang="js">
 
 import {useMapStore} from "~/stores/map.js";
+import {useAccountStore} from "~/stores/account.js";
 
 const mapStore = useMapStore();
-
+const accountStore = useAccountStore();
 
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   mapStore.data.editData = {
     id: '',
     name: '',

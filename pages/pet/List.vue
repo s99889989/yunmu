@@ -4,16 +4,6 @@ import {usePetStore} from "~/stores/pet.js";
 import {initFlowbite} from "flowbite";
 const petStore = usePetStore();
 
-
-//要刪除的點名表名稱
-const delete_id = ref('');
-const delete_name = ref('');
-//設置要刪除的點名表名稱
-const setDeleteMember = (id, name) => {
-  delete_id.value = id;
-  delete_name.value = name;
-}
-
 onMounted( async ()=>{
 
   await refresh();
@@ -48,6 +38,7 @@ const refresh = async () => {
       <!--   內容   -->
       <div :class="{'hidden': loading}">
         <div class="grid gap-6 mb-6 grid-cols-3 items-center pt-5">
+          <!--    搜尋寵物名稱      -->
           <div class="">
             <input v-model="petStore.data.search_pet_name" type="text" id="first_name" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="搜尋寵物" required>
           </div>
@@ -70,7 +61,6 @@ const refresh = async () => {
 
         </div>
       </div>
-
 
     </div>
   </div>

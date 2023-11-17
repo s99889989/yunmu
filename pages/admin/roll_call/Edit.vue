@@ -1,9 +1,10 @@
 <script setup lang="js">
 import {useRollCallStore} from "~/stores/roll_call";
 import {computed} from "vue";
+import {useAccountStore} from "~/stores/account.js";
 
 const rollCallStore = useRollCallStore();
-
+const accountStore = useAccountStore();
 const roll_call = ref({
   date: '',
   roll_call_man: '',
@@ -15,6 +16,8 @@ const roll_call = ref({
 })
 
 onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
   roll_call.value = rollCallStore.data.edit_roll_call;
   // 如果日期是空就返回列表
   if(roll_call.value.date.length < 1){

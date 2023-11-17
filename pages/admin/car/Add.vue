@@ -1,36 +1,19 @@
 <script setup lang="js">
 import {useCarStore} from "~/stores/car.js";
+import FixedAddOptions from "~/components/FixedAddOptions.vue";
+import {useAccountStore} from "~/stores/account.js";
 
-
+const accountStore = useAccountStore();
 const carStore = useCarStore();
 
-const add_input = reactive({
-  label: '極速',
-  label_list: ['極速', '榮耀勳章', '五噴', '六噴', '七噴', '騰空', '實戰', '飄移', '變形', '轉向', '集氣', '起步', '變色'],
+//更新車輛定位
+const upDateLabel = (newValue) => {
+  carStore.data.editData.label = newValue;
+}
+onMounted(()=>{
+  //檢查帳號狀態並做出動作
+  accountStore.checkAdminLogin();
 })
-const getLabelList = () => {
-  let displayLabel = add_input.label_list.slice();
-  displayLabel = displayLabel.filter(label=>{
-
-    return !carStore.data.editData.label.includes(label);
-  })
-  if(displayLabel.length > 0){
-    add_input.label = displayLabel[0];
-  }
-
-  return displayLabel;
-}
-//新增擁有的車
-const addLabel = () => {
-  if(add_input.label.length < 1){
-    return;
-  }
-  carStore.data.editData.label.push(add_input.label);
-}
-//刪除擁有的車
-const removeLabel = (idx) => {
-  carStore.data.editData.label.splice(idx, 1);
-}
 onMounted(()=>{
   carStore.data.editData = {
     id: '',
@@ -111,27 +94,7 @@ onMounted(()=>{
           <input v-model="carStore.data.editData.characteristic" type="text" id="" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         </div>
 
-        <div class=" bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <div class="flex items-center p-5">
-            <select  v-model="add_input.label" class="me-5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option v-for="(l) in getLabelList()" >{{l}}</option>
-            </select>
-            <button @click="addLabel()" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl p-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-              增加</button>
-          </div>
-          <div class="grid grid-cols-2 md:grid-cols-3 items-center ">
-            <div  v-for="(text, index) in carStore.data.editData.label" class="flex mb-5">
-              <p class="p-2 text-3xl text-gray-900 dark:text-white">{{text}}</p>
-              <button @click="removeLabel(index)" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl p-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                刪除</button>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
+        <FixedAddOptions :title="'定位'" @update="upDateLabel" :label_list="['極速', '榮耀勳章', '五噴', '六噴', '七噴', '騰空', '實戰', '飄移', '變形', '轉向', '集氣', '起步', '變色']" :label="'極速'" :label_list_select="carStore.data.editData.label" />
 
       </div>
 
