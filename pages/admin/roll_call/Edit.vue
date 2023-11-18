@@ -30,7 +30,7 @@ const searchMemberList = computed(() => {
   //名稱
   if (rollCallStore.data.search_member_name.length > 0) {
     displayMembers = displayMembers.filter((element) =>
-        element.name.includes(rollCallStore.data.search_member_name)
+        element.game_name.includes(rollCallStore.data.search_member_name)
     );
   }
 

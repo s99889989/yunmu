@@ -31,18 +31,23 @@ onMounted(()=>{
     }
   });
 
+  const login_div = document.getElementById('login');
+  if(login_div !== null){
+    login_div.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        login();
+      }
+    })
+    login_div.addEventListener('submit', function(event) {
+      // 阻止表单默认提交行为
+      event.preventDefault();
 
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-      login();
-    }
-  })
-  document.addEventListener('submit', function(event) {
-    // 阻止表单默认提交行为
-    event.preventDefault();
+      // 其他你想要在提交前执行的逻辑
+    });
+  }
 
-    // 其他你想要在提交前执行的逻辑
-  });
+
+
 })
 
 //是否在讀取
@@ -82,7 +87,7 @@ const login = () => {
 
 
         <!--   內容     -->
-        <form :class="{'hidden': loading}"  class="grid gap-6 grid-cols-1 items-center pt-5 px-5">
+        <form id="login" :class="{'hidden': loading}"  class="grid gap-6 grid-cols-1 items-center pt-5 px-5">
 
           <!--    登入錯誤    -->
           <div :class="{'hidden': !accountStore.data.login_error}" class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
