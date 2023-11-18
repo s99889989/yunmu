@@ -7,8 +7,10 @@ export const useRollCallStore = defineStore('RollCall', () => {
   const data = reactive({
     main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_member_name: '',
-    search_member_have: '有來+沒來',
+    search_member_status: '所有狀況',
     search_roll_call_month: '所有月份',
+    //紀錄UUID和member_list位置
+    member_map: new Map(),
     //成員列表
     member_list: [
       {
@@ -33,8 +35,8 @@ export const useRollCallStore = defineStore('RollCall', () => {
         roll_call_man: '',
         member_list: [{
           id: '',
-          name: '',
-          have: false,
+          game_name: '',
+          state: '',
         }],
       },
     ],
@@ -44,8 +46,8 @@ export const useRollCallStore = defineStore('RollCall', () => {
       roll_call_man: '',
       member_list: [{
         id: '',
-        name: '',
-        have: false,
+        game_name: '',
+        state: '',
       }]
     }
   })
@@ -69,6 +71,9 @@ export const useRollCallStore = defineStore('RollCall', () => {
   //新增
   const add = async () => {
 
+
+
+
     let roll_call_list= {
           date: data.edit_roll_call.date,
           roll_call_man: data.edit_roll_call.roll_call_man,
@@ -77,9 +82,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
 
     roll_call_list.member_list.length = 0;
     data.edit_roll_call.member_list.forEach((member) =>{
-      if(member.have){
-        roll_call_list.member_list.push(member.id);
-      }
+      roll_call_list.member_list.push(member.id+' _ '+member.state);
     })
 
     const url = data.main_url+'yunmu/roll_call/add';
@@ -93,8 +96,9 @@ export const useRollCallStore = defineStore('RollCall', () => {
     })
         .then(res => res.text())
         .then(async data => {
-          //刷新內容
-          await refreshRollCall();
+          data.roll_call_list.unshift(data.edit_roll_call)
+          //更新人員Map對應列表
+          refreshRollCallMap();
         })
 
 
@@ -114,9 +118,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
 
     roll_call_list.member_list.length = 0;
     data.edit_roll_call.member_list.forEach((member) =>{
-      if(member.have){
-        roll_call_list.member_list.push(member.id);
-      }
+      roll_call_list.member_list.push(member.id+' _ '+member.state);
     })
 
     const url = data.main_url+'yunmu/roll_call/update';
@@ -129,9 +131,9 @@ export const useRollCallStore = defineStore('RollCall', () => {
       body: JSON.stringify(roll_call_list)
     })
         .then(res => res.text())
-        .then(async data => {
-          //刷新內容
-          await refreshRollCall();
+        .then(async dataRes => {
+          const index = data.roll_call_map.get(data.edit_roll_call.date);
+          data.roll_call_list[index] = data.edit_roll_call;
         })
 
   }
@@ -163,6 +165,9 @@ export const useRollCallStore = defineStore('RollCall', () => {
 
   //刷新列表
   const refreshRollCall = async () => {
+    data.member_list.forEach((member, key, index)=>{
+      data.member_map.set(member.id, key)
+    })
     let roll_call_list= [
       {
         date: '',
@@ -180,33 +185,37 @@ export const useRollCallStore = defineStore('RollCall', () => {
       data.roll_call_list.length = 0;
       roll_call_list.forEach(value => {
 
+
         //RollCall設置
         const roll_call = {
           date: value.date,
           roll_call_man: value.roll_call_man,
           member_list: [{
             id: '',
-            name: '',
-            have: false,
+            game_name: '',
+            state: '',
           }]
         }
 
         //Member設置
         roll_call.member_list.length = 0;
-
-        data.member_list.forEach(value1 => {
-
-          const member = {
-            id: value1.id,
-            name: value1.game_name,
-            have: false,
+        value.member_list.forEach(value1 => {
+          const parts = value1.split(' _ ');
+          const id = parts[0];
+          const state = parts[1];
+          const idx = data.member_map.get(id);
+          const member = data.member_list[idx];
+          console.log(id+' : '+member.game_name)
+          const memberAdd= {
+            id: id,
+            game_name: member.game_name,
+            state: state,
           }
-          if(value.member_list.includes(value1.id)){
-            member.have = true;
-          }
-
-          roll_call.member_list.push(member);
+          roll_call.member_list.push(memberAdd)
         })
+
+
+
         //RollCall放入
         data.roll_call_list.push(roll_call)
 

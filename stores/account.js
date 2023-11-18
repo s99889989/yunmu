@@ -93,17 +93,17 @@ export const useAccountStore = defineStore('Account', () => {
   }
 
   //檢查帳號狀態並做出動作
-  const checkAdminLogin = () => {
+  const checkAdminLogin = async () => {
     //從瀏覽器讀取值
-    loadDate();
+    await loadDate();
 
     const router = useRouter()
     if(data.member.id.length > 0){
       if(data.member.permissions !== 'admin'){
-        router.push('/')
+        await router.push('/')
       }
     }else {
-      router.push('/account/login')
+      await router.push('/account/login')
     }
 
   }
