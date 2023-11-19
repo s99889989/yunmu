@@ -107,7 +107,7 @@ const searchMemberList = computed(() => {
         <div class="grid gap-6 grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
 
           <div  v-for="(member) in searchMemberList" class="py-5 justify-around flex-col flex bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
-            <p :class="{'text-white': member.state === '未到', 'text-yellow-300': member.state === '有到', 'text-orange-400': member.state === '請假'}" class="text-xl md:text-4xl mb-5 font-bold tracking-tight text-center" >{{member.game_name}}</p>
+            <p :class="{'text-black dark:text-white': member.state === '未到', 'text-yellow-300': member.state === '有到', 'text-orange-400': member.state === '請假'}" class="text-xl md:text-4xl mb-5 font-bold tracking-tight text-center" >{{member.game_name}}</p>
             <select v-model="member.state"
                     class="text-gray-900 dark:text-white  text-xl md:text-2xl font-medium item-select md:w-40 bg-gray-50 border border-gray-300  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option>未到</option>
