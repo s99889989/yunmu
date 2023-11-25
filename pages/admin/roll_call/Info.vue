@@ -51,13 +51,13 @@ const memberList = (state) => {
 
         <div class="flex">
           <p class="text-black dark:text-white text-lg me-5">人數: </p>
-          <p class="text-black dark:text-white text-lg me-5">所有: {{memberList('所有狀況').length}}</p>
+          <p class="text-black dark:text-white text-lg me-5">總共: {{memberList('所有狀況').length}}</p>
           <p class="text-black dark:text-white text-lg me-5">有到: {{memberList('有到').length}}</p>
           <p class="text-black dark:text-white text-lg me-5">請假: {{memberList('請假').length}}</p>
           <p class="text-black dark:text-white text-lg">未到: {{memberList('未到').length}}</p>
         </div>
 
-        <div class="mx-5 mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <div class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <p class="p-5 text-3xl text-fuchsia-700 dark:text-fuchsia-400">有到 人數: {{memberList('有到').length}}</p>
           <div class="grid grid-cols-2 md:grid-cols-3 items-center ">
 
@@ -67,7 +67,7 @@ const memberList = (state) => {
           </div>
         </div>
 
-        <div class="mx-5 mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <div class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <p class="p-5 text-3xl text-fuchsia-700 dark:text-fuchsia-400">請假 人數: {{memberList('請假').length}}</p>
           <div class="grid grid-cols-2 md:grid-cols-3 items-center ">
 
@@ -77,7 +77,7 @@ const memberList = (state) => {
           </div>
         </div>
 
-        <div class="mx-5 mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <div class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <p class="p-5 text-3xl text-fuchsia-700 dark:text-fuchsia-400">未到 人數: {{memberList('未到').length}}</p>
           <div class="grid grid-cols-2 md:grid-cols-3 items-center ">
 
