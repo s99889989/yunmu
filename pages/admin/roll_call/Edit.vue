@@ -43,6 +43,10 @@ const searchMemberList = computed(() => {
     );
   }
 
+  displayMembers = displayMembers.filter((member) =>
+      member.game_position !== '前隊員'
+  );
+
   return displayMembers;
 });
 </script>

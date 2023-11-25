@@ -57,9 +57,18 @@ onMounted( async ()=>{
       <div :class="{'hidden': loading}">
         <div class="grid gap-6 mb-6 grid-cols-3 items-center pt-5">
           <div class="">
-            <input v-model="memberStore.data.search_member_name" type="text" id="first_name" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="搜尋姓名" required>
+            <input v-model="memberStore.data.search_member_name" type="text" id="first_name" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="搜尋遊戲姓名或ID" required>
           </div>
-
+          <div>
+            <select  v-model="memberStore.data.search_member_game_position" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option>所有隊員</option>
+              <option>隊員</option>
+              <option>菁英</option>
+              <option>副隊長</option>
+              <option>隊長</option>
+              <option>前隊員</option>
+            </select>
+          </div>
           <NuxtLink to="/admin/member/add" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
             新增</NuxtLink>
           <button @click="memberStore.refresh()" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
@@ -73,6 +82,7 @@ onMounted( async ()=>{
             <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{member.game_name}}</p>
             <p class="text-2xl md:mb-5 md:text-3xl font-normal text-sky-700 dark:text-sky-400">{{member.game_position}}</p>
             <p class="text-xl md:mb-5 md:text-3xl font-normal text-fuchsia-700 dark:text-fuchsia-400">{{member.game_level}}</p>
+            <p class="text-xl md:mb-5 md:text-3xl font-normal text-gray-700 dark:text-gray-400">{{member.game_id}}</p>
             <div class="inline-flex rounded-md shadow-sm" role="group">
               <NuxtLink to="/admin/member/info" @click="memberStore.setEditValue(member.id)" type="button" class="text-xl md:text-3xl px-4 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
                 查看

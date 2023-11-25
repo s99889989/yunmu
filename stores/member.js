@@ -7,6 +7,7 @@ export const useMemberStore = defineStore('Member', () => {
   const data = reactive({
     main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_member_name: '',
+    search_member_game_position: '所有隊員',
     //紀錄UUID和member_list位置
     member_map: new Map(),
     //成員列表
@@ -47,7 +48,16 @@ export const useMemberStore = defineStore('Member', () => {
     //名稱
     if (data.search_member_name.length > 0) {
       displayMembers = displayMembers.filter((member) =>
-          member.game_name.includes(data.search_member_name)
+          member.game_name.includes(data.search_member_name) || member.game_id.includes(data.search_member_name)
+      );
+    }
+    if(data.search_member_game_position !== '所有隊員'){
+      displayMembers = displayMembers.filter((member) =>
+          member.game_position === data.search_member_game_position
+      );
+    }else {
+      displayMembers = displayMembers.filter((member) =>
+          member.game_position !== '前隊員'
       );
     }
 

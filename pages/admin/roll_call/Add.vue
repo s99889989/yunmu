@@ -19,13 +19,16 @@ onMounted( async () => {
     }
     rollCallStore.data.edit_roll_call.member_list.length = 0;
     rollCallStore.data.member_list.forEach(menubar=>{
-      console.log(menubar.id+" : " +menubar.game_name)
-      const addMember = {
-        id: menubar.id,
-        game_name: menubar.game_name,
-        state: '未到',
+      if(menubar.game_position !== '前隊員'){
+        const addMember = {
+          id: menubar.id,
+          game_name: menubar.game_name,
+          state: '未到',
+        }
+        rollCallStore.data.edit_roll_call.member_list.push(addMember);
       }
-      rollCallStore.data.edit_roll_call.member_list.push(addMember);
+
+
     })
   });
 
