@@ -148,7 +148,6 @@ export const useMemberStore = defineStore('Member', () => {
     } catch (error) {
       data.member_list =  [];
     }finally {
-      data.member_list.forEach(menubar=>console.log(menubar.game_id))
       //更新人員Map對應列表
       refreshMap();
     }

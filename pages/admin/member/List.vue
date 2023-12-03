@@ -12,7 +12,9 @@ const setDeleteMember = (id, name) => {
   delete_member.value = id;
   delete_name.value = name;
 }
-
+onBeforeRouteLeave(async (to, from)=>{
+  localStorage.setItem("scrollY", window.scrollY+"");
+})
 //是否在讀取
 const loading = ref(false);
 onMounted( async ()=>{

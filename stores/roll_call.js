@@ -205,16 +205,16 @@ export const useRollCallStore = defineStore('RollCall', () => {
           const state = parts[1];
           const idx = data.member_map.get(id);
           const member = data.member_list[idx];
-          console.log(id+' : '+member.game_name)
-          const memberAdd= {
-            id: id,
-            game_name: member.game_name,
-            state: state,
+          if(member != null){
+            const memberAdd= {
+              id: id,
+              game_name: member.game_name,
+              state: state,
+            }
+            roll_call.member_list.push(memberAdd)
           }
-          roll_call.member_list.push(memberAdd)
+
         })
-
-
 
         //RollCall放入
         data.roll_call_list.push(roll_call)
