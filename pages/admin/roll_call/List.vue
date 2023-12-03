@@ -38,7 +38,7 @@ const refresh = () => {
 }
 
 //計算所有有到人數
-const getAmount = (date) => {
+const getAmount = (date, state) => {
   let amount = 0;
 
   //從id獲取index
@@ -47,7 +47,7 @@ const getAmount = (date) => {
     const member = rollCallStore.data.roll_call_list[index];
 
     amount = member.member_list.filter(member=>{
-      return member.state === '有到'
+      return member.state === state
     }).length;
 
   }
@@ -105,7 +105,8 @@ const getAmount = (date) => {
 
           <div  v-for="(roll_call) in rollCallStore.rollCallList" class="p-1 md:p-5 flex sm:flex-row md:flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center md:items-start">
             <p class="text-xl p-2 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{roll_call.date}}</p>
-            <p class="text-xl p-2 md:text-5xl font-bold tracking-tight text-sky-700 dark:text-sky-400 text-center">有到: {{getAmount(roll_call.date)}}</p>
+            <p class="text-xl p-2 md:text-5xl font-bold tracking-tight text-sky-700 dark:text-sky-400 text-center">有到: {{getAmount(roll_call.date, '有到')}}</p>
+            <p class="text-xl p-2 md:text-5xl font-bold tracking-tight text-orange-700 dark:text-orange-400 text-center">請假: {{getAmount(roll_call.date, '請假')}}</p>
             <div class="inline-flex rounded-md shadow-sm" role="group">
 
               <NuxtLink @click="rollCallStore.setEditRollCall(roll_call.date)" to="/admin/roll_call/info" type="button" class="text-lg md:text-2xl px-4 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
