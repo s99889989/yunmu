@@ -98,7 +98,8 @@ onMounted(()=>{
           <div class="px-3 py-2 h-64">
             <label for="url-path" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">圖片連結</label>
             <input v-model="carStore.data.editData.image" type="text" id="url-path" class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://madustrialtd.asuscomm.com:9100/ysa/image/2023/%E7%AC%AC3%E5%9B%9E/%E7%AC%AC1%E5%A4%A9/IMG_6429.jpg" required>
-<!--            <span class="text-black dark:text-gray-200">因應網頁瀏覽安全，站上只支援 https 圖片連結。</span>-->
+
+            <!--            <span class="text-black dark:text-gray-200">因應網頁瀏覽安全，站上只支援 https 圖片連結。</span>-->
           </div>
         </div>
         <!-- Modal footer -->

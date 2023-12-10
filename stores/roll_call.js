@@ -54,7 +54,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
 
   //過濾後的點名列表
   const rollCallList = computed(() => {
-    let displayRollCalls = data.roll_call_list.slice();
+    let displayRollCalls = data.roll_call_list.slice().reverse();
 
     if (data.search_roll_call_month !== '所有月份') {
       displayRollCalls = displayRollCalls.filter((element)=>{
