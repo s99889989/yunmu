@@ -69,6 +69,11 @@ const searchMemberList = computed(() => {
           <!--          <p class="text-black dark:text-white text-xl">{{rollCallStore.data.edit_roll_call.roll_call_man}}</p>-->
         </div>
 
+        <div class="flex items-center">
+          <label for="name" class="w-40 text-3xl block font-medium text-gray-900 dark:text-white">車隊排名</label>
+          <input v-model="rollCallStore.data.edit_roll_call.team_ranking" type="text" id="name" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+        </div>
+
         <div class="flex">
           <p class="text-black dark:text-white text-lg me-5">人數: </p>
           <p class="text-black dark:text-white text-lg me-5">所有: {{memberList('所有狀況').length}}</p>

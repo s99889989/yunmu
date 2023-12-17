@@ -38,6 +38,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
           game_name: '',
           state: '',
         }],
+        team_ranking: 0,
       },
     ],
 
@@ -48,7 +49,8 @@ export const useRollCallStore = defineStore('RollCall', () => {
         id: '',
         game_name: '',
         state: '',
-      }]
+      }],
+      team_ranking: 0,
     }
   })
 

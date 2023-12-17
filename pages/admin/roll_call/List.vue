@@ -107,6 +107,7 @@ const getAmount = (date, state) => {
             <p class="text-xl p-2 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{roll_call.date}}</p>
             <p class="text-xl p-2 md:text-5xl font-bold tracking-tight text-sky-700 dark:text-sky-400 text-center">有到: {{getAmount(roll_call.date, '有到')}}</p>
             <p class="text-xl p-2 md:text-5xl font-bold tracking-tight text-orange-700 dark:text-orange-400 text-center">請假: {{getAmount(roll_call.date, '請假')}}</p>
+            <p class="text-xl p-2 md:text-5xl font-bold tracking-tight text-emerald-700 dark:text-emerald-400 text-center">排名: {{roll_call.team_ranking}}</p>
             <div class="inline-flex rounded-md shadow-sm" role="group">
 
               <NuxtLink @click="rollCallStore.setEditRollCall(roll_call.date)" to="/admin/roll_call/info" type="button" class="text-lg md:text-2xl px-4 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
