@@ -77,10 +77,11 @@ export const useRollCallStore = defineStore('RollCall', () => {
 
 
     let roll_call_list= {
-          date: data.edit_roll_call.date,
-          roll_call_man: data.edit_roll_call.roll_call_man,
-          member_list: ['123', '456'],
-        };
+      date: data.edit_roll_call.date,
+      roll_call_man: data.edit_roll_call.roll_call_man,
+      member_list: ['123', '456'],
+      team_ranking: data.edit_roll_call.team_ranking,
+    };
 
     roll_call_list.member_list.length = 0;
     data.edit_roll_call.member_list.forEach((member) =>{
@@ -115,6 +116,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
           date: data.edit_roll_call.date,
           roll_call_man: data.edit_roll_call.roll_call_man,
           member_list: ['123', '456'],
+          team_ranking: data.edit_roll_call.team_ranking,
         }
     ;
 
@@ -196,7 +198,8 @@ export const useRollCallStore = defineStore('RollCall', () => {
             id: '',
             game_name: '',
             state: '',
-          }]
+          }],
+          team_ranking: value.team_ranking,
         }
 
         //Member設置
