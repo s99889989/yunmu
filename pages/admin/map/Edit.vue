@@ -4,8 +4,14 @@ import InsertPicture from "~/pages/admin/map/InsertPicture.vue";
 import {initFlowbite} from "flowbite";
 import {useAccountStore} from "~/stores/account.js";
 
+import {useCarStore} from "~/stores/car.js";
+
+const carStore = useCarStore();
 const mapStore = useMapStore();
 const accountStore = useAccountStore();
+
+
+
 onMounted(()=>{
   //檢查帳號狀態並做出動作
   accountStore.checkAdminLogin();
@@ -16,7 +22,41 @@ onMounted(()=>{
   initFlowbite();
 })
 
+const getCarNameList = () => {
+  let displayLabel = [];
+  let displayMembers = carStore.data.car_list.slice();
 
+  //名稱
+  if (carStore.data.search_car_name.length > 0) {
+    displayMembers = displayMembers.filter((member) =>
+        member.name.includes(carStore.data.search_car_name)
+    );
+  }
+
+  //類型(A, T)
+  if (carStore.data.search_car_level !== '所有等級') {
+    displayMembers = displayMembers.filter(
+        (element) => element.level === carStore.data.search_car_level
+    );
+  }
+
+  //類型(起步車, 騰空車, 轉向車, 平地車, 道具車, 其他車)
+  if (carStore.data.search_car_type === '其他車') {
+    displayMembers = displayMembers.filter(
+        (element) =>  element.type.length === 0
+    );
+  }else if (carStore.data.search_car_type !== '所有類型') {
+    displayMembers = displayMembers.filter(
+        (element) =>  element.type.includes(carStore.data.search_car_type)
+    );
+  }
+
+  displayMembers.forEach((element) => {
+    displayLabel.push(element.name);
+  })
+
+  return displayLabel;
+}
 
 </script>
 
@@ -66,6 +106,48 @@ onMounted(()=>{
           </select>
         </div>
 
+        <div class="flex flex-col">
+          <label class="text-3xl block font-medium text-gray-900 dark:text-white">極速之巔</label>
+
+          <div class="grid gap-6 mb-6 grid-cols-3 items-center pt-5">
+            <div class="">
+              <input v-model="carStore.data.search_car_name" type="text" id="first_name" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="搜尋車名" required>
+            </div>
+            <!--    車等級搜尋      -->
+            <select v-model="carStore.data.search_car_level" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option>所有等級</option>
+              <option>T</option>
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+              <option>D</option>
+              <option>M1</option>
+              <option>M2</option>
+              <option>S</option>
+            </select>
+
+            <!--    車類型搜尋      -->
+            <select v-model="carStore.data.search_car_type" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option>所有類型</option>
+              <option>起步車</option>
+              <option>騰空車</option>
+              <option>轉向車</option>
+              <option>平地車</option>
+              <option>道具車</option>
+              <option>加速帶車</option>
+              <option>其他車</option>
+            </select>
+
+            <div class="flex items-center">
+              <label class="text-3xl block font-medium text-gray-900 dark:text-white">1.</label>
+              <select v-model.number="mapStore.data.editData.top_speed1" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option v-for="(l) in getCarNameList()" >{{l}}</option>
+              </select>
+            </div>
+
+          </div>
+
+        </div>
       </div>
 
       <div class="grid gap-6 grid-cols-2 mt-5">

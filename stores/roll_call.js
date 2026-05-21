@@ -1,11 +1,11 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useCommonStore } from '~/stores/common'
 
 export const useRollCallStore = defineStore('RollCall', () => {
-  //https://madustrialtd.asuscomm.com:9100/
-  //http://localhost:9100/
+  const commonStore = useCommonStore()
+
   const data = reactive({
-    main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_member_name: '',
     search_member_status: '所有狀況',
     search_roll_call_month: '所有月份',
@@ -88,7 +88,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
       roll_call_list.member_list.push(member.id+' _ '+member.state);
     })
 
-    const url = data.main_url+'yunmu/roll_call/add';
+    const url = commonStore.data.main_url+'yunmu/roll_call/add';
 
     fetch(url, {
       method: 'POST',
@@ -125,7 +125,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
       roll_call_list.member_list.push(member.id+' _ '+member.state);
     })
 
-    const url = data.main_url+'yunmu/roll_call/update';
+    const url = commonStore.data.main_url+'yunmu/roll_call/update';
 
     fetch(url, {
       method: 'PUT',
@@ -144,7 +144,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
 
   //移除
   const remove = async (date) => {
-    const url = data.main_url+'yunmu/roll_call/remove/' + date;
+    const url = commonStore.data.main_url+'yunmu/roll_call/remove/' + date;
 
     fetch(url, {
       method: 'DELETE'
@@ -179,7 +179,7 @@ export const useRollCallStore = defineStore('RollCall', () => {
         member_list: [],
       },
     ];
-    const url = data.main_url+'yunmu/roll_call/get';
+    const url = commonStore.data.main_url+'yunmu/roll_call/get';
     try {
       const response = await fetch(url);
       roll_call_list =  await response.json();

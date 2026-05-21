@@ -30,6 +30,38 @@ const refresh = async () => {
 
 }
 
+const add = () => {
+  carStore.data.editData = {
+    id: '',
+    name: '',
+    image: '/car/新手賽車.jpg',
+    type: [],
+    level: 'A',
+    model: '車',
+    modification_branch: '',
+    characteristic: '',
+    label: [],
+    cww: 0,
+    wcww: 0,
+    small_jet_power: 0,
+    small_jet_power_2: 0,
+    nitrogen_power: 0,
+    nitrogen_power_2: 0,
+    stacked_spray_power: 0,
+    stacked_spray_power_2: 0,
+    zeo_180: 0,
+    highest_speed_flat_running: 0,
+    basic_motivation: 0,
+    loss_steering_speed: 0,
+    small_spray_top_speed: 0,
+    nitrogen_top_speed: 0,
+    small_squirt_duration: 0,
+    nitrogen_duration: 0,
+    one_week_switch: 0,
+    one_week_drifting: 0,
+  }
+}
+
 </script>
 
 <template>
@@ -53,9 +85,9 @@ const refresh = async () => {
           <div class="">
             <input v-model="carStore.data.search_car_name" type="text" id="first_name" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="搜尋車名" required>
           </div>
-          <!--    車類型搜尋      -->
-          <select v-model="carStore.data.search_car_type" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option>所有類型</option>
+          <!--    車等級搜尋      -->
+          <select v-model="carStore.data.search_car_level" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option>所有等級</option>
             <option>T</option>
             <option>A</option>
             <option>B</option>
@@ -66,16 +98,30 @@ const refresh = async () => {
             <option>S</option>
           </select>
 
-          <NuxtLink to="/admin/car/add" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+          <!--    車類型搜尋      -->
+          <select v-model="carStore.data.search_car_type" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option>所有類型</option>
+            <option>起步車</option>
+            <option>騰空車</option>
+            <option>轉向車</option>
+            <option>平地車</option>
+            <option>道具車</option>
+            <option>加速帶車</option>
+            <option>其他車</option>
+          </select>
+
+          <NuxtLink @click="add()" to="/admin/car/add" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
             新增</NuxtLink>
           <button @click="refresh()" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
             刷新</button>
           <p class="text-xl text-black dark:text-white" >車數量:{{carStore.searchList.length}}</p>
         </div>
 
-        <div class="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
+        <div class="grid gap-6 grid-cols-1 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 pb-20">
 
           <div  v-for="(car) in carStore.searchList" class="p-1 md:p-2 flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
+
+
             <img :src="car.image" class="mb-2" alt="">
             <p class="text-2xl mb-2 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
             <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -90,6 +136,27 @@ const refresh = async () => {
               </button>
             </div>
           </div>
+
+<!--          <div  v-for="(car) in carStore.searchList" class="p-1 md:p-2 flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">-->
+<!--            <div class="flex">-->
+<!--              <img :src="car.image" class="mb-2 h-1/2" alt="">-->
+<!--              <p class="text-2xl mb-2 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>-->
+<!--            </div>-->
+
+
+<!--            <div class="inline-flex rounded-md shadow-sm" role="group">-->
+<!--              <NuxtLink to="/admin/car/info" @click="carStore.setEditValue(car.id)" type="button" class="text-lg md:text-3xl px-2 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">-->
+<!--                查看-->
+<!--              </NuxtLink>-->
+<!--              <NuxtLink to="/admin/car/edit" @click="carStore.setEditValue(car.id)" type="button" class="text-lg md:text-3xl px-2 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">-->
+<!--                編輯-->
+<!--              </NuxtLink>-->
+<!--              <button @click="setDeleteMember(car.id, car.name)" data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" class="text-lg md:text-3xl px-2 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-r-md hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">-->
+<!--                刪除-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+
 
         </div>
 

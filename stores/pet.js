@@ -1,11 +1,11 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useCommonStore } from '~/stores/common'
 
 export const usePetStore = defineStore('Pet', () => {
-  //https://madustrialtd.asuscomm.com:9100/
-  //http://localhost:9100/
+  const commonStore = useCommonStore()
+
   const data = reactive({
-    main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_pet_name: '',
     image_list:[
       {
@@ -70,7 +70,7 @@ export const usePetStore = defineStore('Pet', () => {
     const formData = new FormData();
     formData.append('file', inputFile.files[0]);
 
-    const url = data.main_url+'image/add/'+data.image_path.join('__');
+    const url = commonStore.data.main_url+'image/add/'+data.image_path.join('__');
     console.log('上傳')
     console.log(url)
     fetch(url, {
@@ -84,7 +84,7 @@ export const usePetStore = defineStore('Pet', () => {
             insert_button.click();
           }
           if(imageName !== 'Empty' && imageName !== 'Error'){
-            const url = data.main_url+data.image_path.join('/')+'/'+ imageName;
+            const url = commonStore.data.main_url+data.image_path.join('/')+'/'+ imageName;
             data.editData.image = url;
           }
 
@@ -95,7 +95,7 @@ export const usePetStore = defineStore('Pet', () => {
   //刷新圖片列表
   const refreshImage = () => {
     const pathList = data.image_path;
-    const url = data.main_url+'image/get';
+    const url = commonStore.data.main_url+'image/get';
     fetch(url,{
       method: 'POST',
       headers: {
@@ -111,7 +111,7 @@ export const usePetStore = defineStore('Pet', () => {
           image_list.forEach(image=>{
             console.log(image)
             data.image_list.push({
-              url: data.main_url+image,
+              url: commonStore.data.main_url+image,
               select: false,
             })
           })
@@ -119,7 +119,7 @@ export const usePetStore = defineStore('Pet', () => {
   }
   //新增
   const add = async () => {
-    const url = data.main_url+'yunmu/pet/add';
+    const url = commonStore.data.main_url+'yunmu/pet/add';
     fetch(url, {
       method: 'POST',
       headers: {
@@ -141,7 +141,7 @@ export const usePetStore = defineStore('Pet', () => {
   //更新
   const update = () => {
 
-    const url = data.main_url+'yunmu/pet/update';
+    const url = commonStore.data.main_url+'yunmu/pet/update';
 
     fetch(url, {
       method: 'PUT',
@@ -170,7 +170,7 @@ export const usePetStore = defineStore('Pet', () => {
 
   //移除
   const remove = (id) => {
-    const url = data.main_url+'yunmu/pet/remove/' + id;
+    const url = commonStore.data.main_url+'yunmu/pet/remove/' + id;
     console.log('刪除: '+id)
     fetch(url, {
       method: 'DELETE'
@@ -196,7 +196,7 @@ export const usePetStore = defineStore('Pet', () => {
 
   //刷新列表
   const refresh = async () => {
-    const url = data.main_url+'yunmu/pet/get';
+    const url = commonStore.data.main_url+'yunmu/pet/get';
     try {
       const response = await fetch(url);
       data.pet_list = await response.json();

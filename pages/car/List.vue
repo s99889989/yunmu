@@ -43,8 +43,8 @@ const refresh = async () => {
           <div class="">
             <input v-model="carStore.data.search_car_name" type="text" id="first_name" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="搜尋車名" required>
           </div>
-          <!--    車類型搜尋      -->
-          <select v-model="carStore.data.search_car_type" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <!--    車等級搜尋      -->
+          <select v-model="carStore.data.search_car_level" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option>所有類型</option>
             <option>T</option>
             <option>A</option>
@@ -54,6 +54,18 @@ const refresh = async () => {
             <option>M1</option>
             <option>M2</option>
             <option>S</option>
+          </select>
+
+          <!--    車類型搜尋      -->
+          <select v-model="carStore.data.search_car_type" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option>所有類型</option>
+            <option>起步車</option>
+            <option>騰空車</option>
+            <option>轉向車</option>
+            <option>平地車</option>
+            <option>道具車</option>
+            <option>加速帶車</option>
+            <option>其他車</option>
           </select>
 
           <button @click="refresh()" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium text-center rounded-lg text-xl py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">

@@ -1,11 +1,10 @@
-
 import { defineStore } from 'pinia'
+import { useCommonStore } from '~/stores/common'
 
 export const useMemberStore = defineStore('Member', () => {
-  //https://madustrialtd.asuscomm.com:9100/
-  //http://localhost:9100/
+  const commonStore = useCommonStore()
+
   const data = reactive({
-    main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_member_name: '',
     search_member_game_position: '所有隊員',
     //紀錄UUID和member_list位置
@@ -66,7 +65,7 @@ export const useMemberStore = defineStore('Member', () => {
 
   //新增
   const add = async () => {
-    const url = data.main_url+'yunmu/member/add';
+    const url = commonStore.data.main_url+'yunmu/member/add';
     fetch(url, {
       method: 'POST',
       headers: {
@@ -88,7 +87,7 @@ export const useMemberStore = defineStore('Member', () => {
   //更新
   const edit = () => {
 
-    const url = data.main_url+'yunmu/member/update';
+    const url = commonStore.data.main_url+'yunmu/member/update';
 
     fetch(url, {
       method: 'PUT',
@@ -114,7 +113,7 @@ export const useMemberStore = defineStore('Member', () => {
 
   //移除
   const remove = (id) => {
-    const url = data.main_url+'yunmu/member/remove/' + id;
+    const url = commonStore.data.main_url+'yunmu/member/remove/' + id;
 
     fetch(url, {
       method: 'DELETE'
@@ -141,7 +140,7 @@ export const useMemberStore = defineStore('Member', () => {
   //刷新列表
   const refresh = async () => {
 
-    const url = data.main_url+'yunmu/member/get';
+    const url = commonStore.data.main_url+'yunmu/member/get';
     try {
       const response = await fetch(url);
       data.member_list = await response.json();

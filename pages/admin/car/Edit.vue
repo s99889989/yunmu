@@ -23,6 +23,12 @@ const upDateLabel = (newValue) => {
   carStore.data.editData.label = newValue;
 }
 
+//更新車輛類型
+const upDateType = (newValue) => {
+  carStore.data.editData.type = newValue;
+}
+
+
 </script>
 
 <template>
@@ -50,8 +56,8 @@ const upDateLabel = (newValue) => {
         </div>
 
         <div class="flex items-center">
-          <label class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">車種</label>
-          <select  v-model="carStore.data.editData.type" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <label class="w-32 md:w-32 text-3xl block font-medium text-gray-900 dark:text-white">車等級</label>
+          <select  v-model="carStore.data.editData.level" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option>A</option>
             <option>B</option>
             <option>C</option>
@@ -62,6 +68,11 @@ const upDateLabel = (newValue) => {
             <option>S</option>
           </select>
         </div>
+
+
+
+        <FixedAddOptions :title="'類型'" @update="upDateType" :label_list="['起步車', '騰空車', '轉向車', '平地車', '道具車', '加速帶車']" :label_title="'選擇類型'" :label_list_select="carStore.data.editData.type" />
+
 
         <div class="flex items-center">
           <label class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">車型</label>
@@ -75,15 +86,23 @@ const upDateLabel = (newValue) => {
 
         <div class="flex items-center">
           <label for="password" class="w-48 md:w-36 text-3xl block font-medium text-gray-900 dark:text-white">改裝分支</label>
-          <input v-model="carStore.data.editData.modification_branch" type="text" id="" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+          <input v-model="carStore.data.editData.modification_branch" type="text" id="" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
         </div>
+
+<!--        <div class="flex items-center">-->
+<!--          <label for="password" class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">特性</label>-->
+<!--          <input v-model="carStore.data.editData.characteristic" type="text" id="" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>-->
+<!--        </div>-->
 
         <div class="flex items-center">
           <label for="password" class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">特性</label>
-          <input v-model="carStore.data.editData.characteristic" type="text" id="" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+          <textarea  v-model="carStore.data.editData.characteristic" rows="4" class="block p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="輸入特性..."></textarea>
+
         </div>
 
-        <FixedAddOptions :title="'定位'" @update="upDateLabel" :label_list="['極速', '榮耀勳章', '五噴', '六噴', '七噴', '騰空', '實戰', '飄移', '變形', '轉向', '集氣', '起步', '變色']" :label="'極速'" :label_list_select="carStore.data.editData.label" />
+        <FixedAddOptions :title="'定位'" @update="upDateLabel" :label_list="['極速', '榮耀勳章', '五噴', '六噴', '七噴', '騰空', '實戰', '飄移', '變形', '轉向', '集氣', '起步', '變色', '道具', '年度限定', '改裝回退', '亞洲盃', '可開車門']" :label_title="'選擇定位'" :label_list_select="carStore.data.editData.label" />
+
 
 
       </div>

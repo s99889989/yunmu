@@ -1,11 +1,10 @@
-
 import { defineStore } from 'pinia'
+import { useCommonStore } from '~/stores/common'
 
 export const useAccountStore = defineStore('Account', () => {
-  //https://madustrialtd.asuscomm.com:9100/
-  //http://localhost:9100/
+  const commonStore = useCommonStore()
+
   const data = reactive({
-    main_url: 'https://madustrialtd.asuscomm.com:9100/',
     admin: false,
     login_error: false,
     password: '',
@@ -44,7 +43,7 @@ export const useAccountStore = defineStore('Account', () => {
 
   //新增
   const add = async () => {
-    const url = data.main_url+'yunmu/member/add';
+    const url = commonStore.data.main_url+'yunmu/member/add';
     fetch(url, {
       method: 'POST',
       headers: {
@@ -63,7 +62,7 @@ export const useAccountStore = defineStore('Account', () => {
   //更新
   const update = () => {
 
-    const url = data.main_url+'yunmu/member/update';
+    const url = commonStore.data.main_url+'yunmu/member/update';
 
     fetch(url, {
       method: 'PUT',
@@ -114,7 +113,7 @@ export const useAccountStore = defineStore('Account', () => {
       id: id,
       password: password,
     }
-    const url = data.main_url+'yunmu/account/login';
+    const url = commonStore.data.main_url+'yunmu/account/login';
     fetch(url, {
       method: 'POST',
       headers: {

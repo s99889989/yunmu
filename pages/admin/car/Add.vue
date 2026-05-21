@@ -10,40 +10,82 @@ const carStore = useCarStore();
 const upDateLabel = (newValue) => {
   carStore.data.editData.label = newValue;
 }
+//更新車輛類型
+const upDateType = (newValue) => {
+  carStore.data.editData.type = newValue;
+}
 onMounted(()=>{
   //檢查帳號狀態並做出動作
   accountStore.checkAdminLogin();
+  //
+  // setTimeout(()=>{
+  //   carStore.data.editData = {
+  //     id: '',
+  //     name: '',
+  //     image: '/car/新手賽車.jpg',
+  //     type: [],
+  //     level: 'A',
+  //     model: '車',
+  //     modification_branch: '',
+  //     characteristic: '',
+  //     label: [],
+  //     cww: 0,
+  //     wcww: 0,
+  //     small_jet_power: 0,
+  //     small_jet_power_2: 0,
+  //     nitrogen_power: 0,
+  //     nitrogen_power_2: 0,
+  //     stacked_spray_power: 0,
+  //     stacked_spray_power_2: 0,
+  //     zeo_180: 0,
+  //     highest_speed_flat_running: 0,
+  //     basic_motivation: 0,
+  //     loss_steering_speed: 0,
+  //     small_spray_top_speed: 0,
+  //     nitrogen_top_speed: 0,
+  //     small_squirt_duration: 0,
+  //     nitrogen_duration: 0,
+  //     one_week_switch: 0,
+  //     one_week_drifting: 0,
+  //   }
+  // }, 50)
 })
-onMounted(()=>{
-  carStore.data.editData = {
-    id: '',
-    name: '',
-    image: '/car/新手賽車.jpg',
-    type: 'A',
-    model: '車',
-    modification_branch: '',
-    characteristic: '',
-    label: [],
-    cww: 0,
-    wcww: 0,
-    small_jet_power: 0,
-    small_jet_power_2: 0,
-    nitrogen_power: 0,
-    nitrogen_power_2: 0,
-    stacked_spray_power: 0,
-    stacked_spray_power_2: 0,
-    zeo_180: 0,
-    highest_speed_flat_running: 0,
-    basic_motivation: 0,
-    loss_steering_speed: 0,
-    small_spray_top_speed: 0,
-    nitrogen_top_speed: 0,
-    small_squirt_duration: 0,
-    nitrogen_duration: 0,
-    one_week_switch: 0,
-    one_week_drifting: 0,
-  }
-})
+// onMounted(()=>{
+//   carStore.data.editData = {
+//     id: '',
+//     name: '',
+//     image: '/car/新手賽車.jpg',
+//     type: [],
+//     level: 'A',
+//     model: '車',
+//     modification_branch: '',
+//     characteristic: '',
+//     label: [],
+//     cww: 0,
+//     wcww: 0,
+//     small_jet_power: 0,
+//     small_jet_power_2: 0,
+//     nitrogen_power: 0,
+//     nitrogen_power_2: 0,
+//     stacked_spray_power: 0,
+//     stacked_spray_power_2: 0,
+//     zeo_180: 0,
+//     highest_speed_flat_running: 0,
+//     basic_motivation: 0,
+//     loss_steering_speed: 0,
+//     small_spray_top_speed: 0,
+//     nitrogen_top_speed: 0,
+//     small_squirt_duration: 0,
+//     nitrogen_duration: 0,
+//     one_week_switch: 0,
+//     one_week_drifting: 0,
+//   }
+// })
+
+
+
+
+
 </script>
 
 <template>
@@ -60,19 +102,8 @@ onMounted(()=>{
           <input v-model="carStore.data.editData.name" type="text" id="car_name" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         </div>
 
-        <div class="flex items-center">
-          <label class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">車種</label>
-          <select  v-model="carStore.data.editData.type" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option>A</option>
-            <option>B</option>
-            <option>C</option>
-            <option>D</option>
-            <option>T</option>
-            <option>M1</option>
-            <option>M2</option>
-            <option>S</option>
-          </select>
-        </div>
+        <FixedAddOptions :title="'類型'" @update="upDateType" :label_list="['起步車', '騰空車', '轉向車', '平地車', '道具車', '加速帶車']" :label_title="'選擇類型'" :label_list_select="carStore.data.editData.type" />
+
 
         <div class="flex items-center">
           <label class="w-24 md:w-20 text-3xl block font-medium text-gray-900 dark:text-white">車型</label>
@@ -94,7 +125,7 @@ onMounted(()=>{
           <input v-model="carStore.data.editData.characteristic" type="text" id="" class="ps-5 flex items-center text-xl bg-gray-50 border h-12 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
         </div>
 
-        <FixedAddOptions :title="'定位'" @update="upDateLabel" :label_list="['極速', '榮耀勳章', '五噴', '六噴', '七噴', '騰空', '實戰', '飄移', '變形', '轉向', '集氣', '起步', '變色']" :label="'極速'" :label_list_select="carStore.data.editData.label" />
+        <FixedAddOptions :title="'定位'" @update="upDateLabel" :label_list="['極速', '榮耀勳章', '五噴', '六噴', '七噴', '騰空', '實戰', '飄移', '變形', '轉向', '集氣', '起步', '變色', '道具', '年度限定', '改裝回退', '亞洲盃', '可開車門']" :label_title="'選擇定位'" :label_list_select="carStore.data.editData.label" />
 
       </div>
 

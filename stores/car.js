@@ -1,12 +1,12 @@
-
 import { defineStore } from 'pinia'
+import { useCommonStore } from '~/stores/common'
 
 export const useCarStore = defineStore('Car', () => {
-  //https://madustrialtd.asuscomm.com:9100/
-  //http://localhost:9100/
+  const commonStore = useCommonStore()
+
   const data = reactive({
-    main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_car_name: '',
+    search_car_level: '所有等級',
     search_car_type: '所有類型',
     image_list:[
       {
@@ -21,13 +21,14 @@ export const useCarStore = defineStore('Car', () => {
     image_path:[],
     //紀錄UUID和car_list位置
     car_map: new Map(),
-    //成員列表
+    //車列表
     car_list: [
       {
         id: '',
         name: '',
         image: '',
-        type: 'A',
+        type: [],
+        level: 'A',
         model: '車',
         modification_branch: '',
         characteristic: '',
@@ -57,7 +58,8 @@ export const useCarStore = defineStore('Car', () => {
       id: '',
       name: '',
       image: '',
-      type: 'A',
+      type: [],
+      level: 'A',
       model: '車',
       modification_branch: '',
       characteristic: '',
@@ -94,11 +96,24 @@ export const useCarStore = defineStore('Car', () => {
     }
 
     //類型(A, T)
-    if (data.search_car_type !== '所有類型') {
+    if (data.search_car_level !== '所有等級') {
       displayMembers = displayMembers.filter(
-          (element) => element.type === data.search_car_type
+          (element) => element.level === data.search_car_level
       );
     }
+
+    //類型(起步車, 騰空車, 轉向車, 平地車, 道具車, 其他車)
+    if (data.search_car_type === '其他車') {
+      displayMembers = displayMembers.filter(
+          (element) =>  element.type.length === 0
+      );
+    }else if (data.search_car_type !== '所有類型') {
+      displayMembers = displayMembers.filter(
+          (element) =>  element.type.includes(data.search_car_type)
+      );
+    }
+
+
 
     return displayMembers;
   })
@@ -111,7 +126,7 @@ export const useCarStore = defineStore('Car', () => {
     const formData = new FormData();
     formData.append('file', inputFile.files[0]);
 
-    const url = data.main_url+'image/add/'+data.image_path.join('__');
+    const url = commonStore.data.main_url+'image/add/'+data.image_path.join('__');
 
     fetch(url, {
       method: 'POST',
@@ -124,7 +139,7 @@ export const useCarStore = defineStore('Car', () => {
             insert_button.click();
           }
           if(imageName !== 'Empty' && imageName !== 'Error'){
-            const url = data.main_url+data.image_path.join('/')+'/'+ imageName;
+            const url = commonStore.data.main_url+data.image_path.join('/')+'/'+ imageName;
             data.editData.image = url;
           }
 
@@ -134,7 +149,7 @@ export const useCarStore = defineStore('Car', () => {
   }
   const refreshImage = () => {
     const pathList = data.image_path;
-    const url = data.main_url+'image/get';
+    const url = commonStore.data.main_url+'image/get';
     fetch(url,{
       method: 'POST',
       headers: {
@@ -150,7 +165,7 @@ export const useCarStore = defineStore('Car', () => {
           image_list.forEach(image=>{
             console.log(image)
             data.image_list.push({
-              url: data.main_url+image,
+              url: commonStore.data.main_url+image,
               select: false,
             })
           })
@@ -158,7 +173,7 @@ export const useCarStore = defineStore('Car', () => {
   }
   //新增
   const add = async () => {
-    const url = data.main_url+'yunmu/car/add';
+    const url = commonStore.data.main_url+'yunmu/car/add';
     fetch(url, {
       method: 'POST',
       headers: {
@@ -180,9 +195,9 @@ export const useCarStore = defineStore('Car', () => {
   //更新
   const update = () => {
 
-    const url = data.main_url+'yunmu/car/update';
+    const url = commonStore.data.main_url+'yunmu/car/update';
     console.log('更新')
-    console.log(data.editData.modification_branch)
+    console.log(data.editData.characteristic)
     fetch(url, {
       method: 'PUT',
       headers: {
@@ -210,7 +225,7 @@ export const useCarStore = defineStore('Car', () => {
 
   //移除
   const remove = (id) => {
-    const url = data.main_url+'yunmu/car/remove/' + id;
+    const url = commonStore.data.main_url+'yunmu/car/remove/' + id;
     console.log('刪除: '+id)
     fetch(url, {
       method: 'DELETE'
@@ -236,7 +251,7 @@ export const useCarStore = defineStore('Car', () => {
 
   //刷新列表
   const refresh = async () => {
-    const url = data.main_url+'yunmu/car/get';
+    const url = commonStore.data.main_url+'yunmu/car/get';
     try {
       const response = await fetch(url);
       data.car_list = await response.json();

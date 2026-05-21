@@ -2,20 +2,21 @@
 const props = defineProps({
   title: String,
   label_list_select: Array,
-  label: String,
   label_list: Array,
+  label_title: String,
 })
 
 const emit =  defineEmits(['update'])
 
 const data = reactive({
   label_list_select: props.label_list_select.slice(),
-  label: props.label,
+  label: props.label_title,
   label_list: props.label_list
 })
 
 const getLabelList = () => {
   let displayLabel = data.label_list.slice();
+  displayLabel.push(props.label_title)
   displayLabel = displayLabel.filter(label=>{
     return !data.label_list_select.includes(label);
   })
@@ -26,6 +27,9 @@ watch(data.label_list_select, (newValue)=>{
 })
 //新增擁有的車
 const addLabel = () => {
+  if(data.label === props.label_title){
+    return;
+  }
   if(data.label.length < 1){
     return;
   }

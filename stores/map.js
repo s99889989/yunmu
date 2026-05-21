@@ -1,11 +1,10 @@
-
 import { defineStore } from 'pinia'
+import { useCommonStore } from '~/stores/common'
 
 export const useMapStore = defineStore('Map', () => {
-  //https://madustrialtd.asuscomm.com:9100/
-  //http://localhost:9100/
+  const commonStore = useCommonStore()
+
   const data = reactive({
-    main_url: 'https://madustrialtd.asuscomm.com:9100/',
     search_map_name: '',
     search_map_type: '所有類型',
     search_map_star: 0,
@@ -20,9 +19,9 @@ export const useMapStore = defineStore('Map', () => {
       },
     ],
     image_path:[],
-    //紀錄UUID和car_list位置
+    //紀錄id和地圖位置
     map_map: new Map(),
-    //成員列表
+    //地圖列表
     map_list: [
       {
         id: '',
@@ -32,13 +31,15 @@ export const useMapStore = defineStore('Map', () => {
         star: 1,
       },
     ],
-    //編輯的成員
+    //編輯的地圖
     editData: {
       id: '',
       name: '',
       image: '/map/中國城.jpg',
       type: '簡單',
       star: 1,
+      top_speed_car: '',
+      top_speed_pet: '',
     },
 
   })
@@ -79,7 +80,7 @@ export const useMapStore = defineStore('Map', () => {
     const formData = new FormData();
     formData.append('file', inputFile.files[0]);
 
-    const url = data.main_url+'image/add/'+data.image_path.join('__');
+    const url = commonStore.data.main_url+'image/add/'+data.image_path.join('__');
 
     fetch(url, {
       method: 'POST',
@@ -92,7 +93,7 @@ export const useMapStore = defineStore('Map', () => {
             insert_button.click();
           }
           if(imageName !== 'Empty' && imageName !== 'Error'){
-            const url = data.main_url+data.image_path.join('/')+'/'+ imageName;
+            const url = commonStore.data.main_url+data.image_path.join('/')+'/'+ imageName;
             data.editData.image = url;
           }
 
@@ -103,7 +104,7 @@ export const useMapStore = defineStore('Map', () => {
   //刷新圖片列表
   const refreshImage = () => {
     const pathList = data.image_path;
-    const url = data.main_url+'image/get';
+    const url = commonStore.data.main_url+'image/get';
     fetch(url,{
       method: 'POST',
       headers: {
@@ -119,7 +120,7 @@ export const useMapStore = defineStore('Map', () => {
           image_list.forEach(image=>{
             console.log(image)
             data.image_list.push({
-              url: data.main_url+image,
+              url: commonStore.data.main_url+image,
               select: false,
             })
           })
@@ -127,7 +128,7 @@ export const useMapStore = defineStore('Map', () => {
   }
   //新增
   const add = async () => {
-    const url = data.main_url+'yunmu/map/add';
+    const url = commonStore.data.main_url+'yunmu/map/add';
     fetch(url, {
       method: 'POST',
       headers: {
@@ -149,7 +150,7 @@ export const useMapStore = defineStore('Map', () => {
   //更新
   const update = () => {
 
-    const url = data.main_url+'yunmu/map/update';
+    const url = commonStore.data.main_url+'yunmu/map/update';
 
     fetch(url, {
       method: 'PUT',
@@ -178,7 +179,7 @@ export const useMapStore = defineStore('Map', () => {
 
   //移除
   const remove = (id) => {
-    const url = data.main_url+'yunmu/map/remove/' + id;
+    const url = commonStore.data.main_url+'yunmu/map/remove/' + id;
     console.log('刪除: '+id)
     fetch(url, {
       method: 'DELETE'
@@ -204,7 +205,7 @@ export const useMapStore = defineStore('Map', () => {
 
   //刷新列表
   const refresh = async () => {
-    const url = data.main_url+'yunmu/map/get';
+    const url = commonStore.data.main_url+'yunmu/map/get';
     try {
       const response = await fetch(url);
       data.map_list = await response.json();
