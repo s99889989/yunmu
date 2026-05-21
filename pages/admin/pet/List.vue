@@ -3,8 +3,10 @@
 import {usePetStore} from "~/stores/pet.js";
 import {initFlowbite} from "flowbite";
 import {useAccountStore} from "~/stores/account.js";
+import {useCommonStore} from "~/stores/common.js";
 const petStore = usePetStore();
 const accountStore = useAccountStore();
+const commonStore = useCommonStore()
 
 //要刪除的點名表名稱
 const delete_id = ref('');
@@ -65,7 +67,7 @@ const refresh = async () => {
         <div class="grid gap-6 grid-cols-3 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
 
           <div v-for="(car) in petStore.searchList" class="p-1 md:p-2 flex flex-col justify-around bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
-            <img :src="car.image" alt="">
+            <img :src="commonStore.data.main_url+car.image" alt="">
             <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
             <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">著裝度:{{car.dress}}</p>
             <div class="inline-flex rounded-md shadow-sm" role="group">

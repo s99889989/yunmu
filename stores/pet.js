@@ -1,212 +1,64 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useCommonStore } from '~/stores/common'
+import { useApi } from '~/composables/useApi'
+import { useImageManager } from '~/composables/useImageManager'
+
+const DEFAULT_PET = () => ({
+  id: '', name: '', image: '/pet/pet/企鵝仔仔.jpg',
+  label: [], dress: 1, attribute_image: [], attribute_info: [], skin_image: [],
+})
 
 export const usePetStore = defineStore('Pet', () => {
-  const commonStore = useCommonStore()
+  const { get, post, put, del } = useApi()
 
   const data = reactive({
     search_pet_name: '',
-    image_list:[
-      {
-        url: 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
-        select: false,
-      },
-      {
-        url: 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg',
-        select: false,
-      },
-    ],
-    image_path:[],
-    //紀錄UUID和car_list位置
+    image_list: [],
+    image_path: [],
     pet_map: new Map(),
-    //成員列表
-    pet_list: [
-      {
-        id: '',
-        name: '',
-        image: '/pet/pet/企鵝仔仔.jpg',
-        label: [],
-        dress: 1,
-        attribute_image: [],
-        attribute_info: [],
-        skin_image: [],
-      },
-    ],
-    //編輯的成員
-    editData: {
-      id: '',
-      name: '',
-      image: '/pet/pet/企鵝仔仔.jpg',
-      label: [],
-      dress: 1,
-      attribute_image: [],
-      attribute_info: [],
-      skin_image: [],
-    },
+    pet_list: [],
+    editData: DEFAULT_PET(),
   })
 
+  const { addImage } = useImageManager(data)
 
-  //搜尋後的結果
   const searchList = computed(() => {
-    let displayMembers = data.pet_list.slice();
-
-    //名稱
-    if (data.search_pet_name.length > 0) {
-      displayMembers = displayMembers.filter((member) =>
-          member.name.includes(data.search_pet_name)
-      );
-    }
-
-    return displayMembers;
+    let list = data.pet_list.slice()
+    if (data.search_pet_name)
+      list = list.filter(p => p.name.includes(data.search_pet_name))
+    return list
   })
-  //增加圖片
-  const addImage = () => {
 
-    if(data.image_path.length < 0){
-      return;
-    }
-    const inputFile = document.getElementById('dropzone-file');
-    const formData = new FormData();
-    formData.append('file', inputFile.files[0]);
+  const refreshMap = () =>
+      data.pet_list.forEach((p, i) => data.pet_map.set(p.id, i))
 
-    const url = commonStore.data.main_url+'image/add/'+data.image_path.join('__');
-    console.log('上傳')
-    console.log(url)
-    fetch(url, {
-      method: 'POST',
-      body: formData,
-    })
-        .then(response => response.text())
-        .then(imageName => {
-          const insert_button = document.getElementById('insert_button');
-          if(insert_button != null){
-            insert_button.click();
-          }
-          if(imageName !== 'Empty' && imageName !== 'Error'){
-            const url = commonStore.data.main_url+data.image_path.join('/')+'/'+ imageName;
-            data.editData.image = url;
-          }
-
-
-        })
-        .catch(error => console.error('錯誤:', error));
-  }
-  //刷新圖片列表
-  const refreshImage = () => {
-    const pathList = data.image_path;
-    const url = commonStore.data.main_url+'image/get';
-    fetch(url,{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(pathList)
-    })
-        .then(res=>res.json())
-        .then(dataRes=>{
-          let image_list = [''];
-          image_list = dataRes;
-          data.image_list.length = 0;
-          image_list.forEach(image=>{
-            console.log(image)
-            data.image_list.push({
-              url: commonStore.data.main_url+image,
-              select: false,
-            })
-          })
-        })
-  }
-  //新增
-  const add = async () => {
-    const url = commonStore.data.main_url+'yunmu/pet/add';
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data.editData)
-    })
-        .then(res => res.text())
-        .then(uuidString => {
-          data.editData.id = uuidString;
-          data.pet_list.unshift(data.editData);
-          //更新Map對應列表
-          refreshMap();
-
-        })
-
-  }
-
-  //更新
-  const update = () => {
-
-    const url = commonStore.data.main_url+'yunmu/pet/update';
-
-    fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data.editData)
-    }).then(res => {
-      const id = data.editData.id;
-      const index = data.pet_map.get(id);
-      data.pet_list[index] =  data.editData;
-    })
-
-  }
-
-
-  //設置編輯值
-  const setEditValue = (id) => {
-    //從id獲取index
-    const index = data.pet_map.get(id);
-    data.editData =  data.pet_list[index];
-    data.image_path = ['yunmu', 'pet', data.editData.id]
-    //刷新圖片列表
-    refreshImage();
-  }
-
-  //移除
-  const remove = (id) => {
-    const url = commonStore.data.main_url+'yunmu/pet/remove/' + id;
-    console.log('刪除: '+id)
-    fetch(url, {
-      method: 'DELETE'
-
-    }).then(res => res.text())
-        .then(data => {
-
-        })
-    //從id獲取index
-    const index = data.pet_map.get(id);
-    //從列表刪除
-    data.pet_list.splice(index, 1);
-    //更新ID的對應表
-    refreshMap();
-
-  }
-  //更新ID的對應表
-  const refreshMap = () => {
-    data.pet_list.forEach((member, key, index)=>{
-      data.pet_map.set(member.id, key)
-    })
-  }
-
-  //刷新列表
   const refresh = async () => {
-    const url = commonStore.data.main_url+'yunmu/pet/get';
-    try {
-      const response = await fetch(url);
-      data.pet_list = await response.json();
-    } catch (error) {
-      data.pet_list =  [];
-    }finally {
-      //更新Map對應列表
-      refreshMap();
-    }
+    try { data.pet_list = await get('yunmu/pet/get') }
+    catch { data.pet_list = [] }
+    finally { refreshMap() }
   }
 
-  return { data, refresh, add, remove, update, setEditValue, searchList, addImage }
+  const add = () =>
+      post('yunmu/pet/add', data.editData).then(res => res.text()).then(id => {
+        data.editData.id = id
+        data.pet_list.unshift(data.editData)
+        refreshMap()
+      })
+
+  const update = () =>
+      put('yunmu/pet/update', data.editData).then(() => {
+        data.pet_list[data.pet_map.get(data.editData.id)] = data.editData
+      })
+
+  const remove = (id) =>
+      del('yunmu/pet/remove/' + id).then(() => {
+        data.pet_list.splice(data.pet_map.get(id), 1)
+        refreshMap()
+      })
+
+  const setEditValue = (id) => {
+    data.editData = data.pet_list[data.pet_map.get(id)]
+    data.image_path = ['yunmu', 'pet', data.editData.id]
+  }
+
+  return { data, searchList, refresh, add, update, remove, setEditValue, addImage }
 })

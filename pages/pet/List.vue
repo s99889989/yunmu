@@ -2,7 +2,9 @@
 
 import {usePetStore} from "~/stores/pet.js";
 import {initFlowbite} from "flowbite";
+import {useCommonStore} from "~/stores/common.js";
 const petStore = usePetStore();
+const commonStore = useCommonStore()
 
 onMounted( async ()=>{
 
@@ -51,7 +53,7 @@ const refresh = async () => {
         <div class="grid gap-6 grid-cols-3 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 pb-20">
 
           <div v-for="(car) in petStore.searchList" class="p-1 md:p-2 flex flex-col justify-around bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center">
-            <img :src="car.image" alt="">
+            <img :src="commonStore.data.main_url+car.image" alt="">
             <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{car.name}}</p>
             <p class="text-2xl md:mb-5 md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-center">著裝度:{{car.dress}}</p>
             <NuxtLink to="/pet/info" @click="petStore.setEditValue(car.id)" type="button" class="text-xl md:text-3xl px-4 py-2 font-medium text-gray-900 bg-transparent border border-gray-900 rounded-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
